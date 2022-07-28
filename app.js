@@ -9,9 +9,10 @@ function computerPlay() {
     return picks[Math.floor(Math.random() * 3)]
 }
 
-const playerSelection = () => prompt("Pick an option [Rock, Paper, Scissor]").toString().toLowerCase();
+// const playerSelection = () => prompt("Pick an option [Rock, Paper, Scissor]").toString().toLowerCase();
 
 function playRound(playerSelection, computerSelection) {
+    console.log(computerSelection)
     if (playerSelection === computerSelection) {
         return {
             winner: 'draw',
@@ -34,12 +35,12 @@ function playRound(playerSelection, computerSelection) {
 }
 
 function showRoundResult(results) {
+    const p1 = document.querySelector('p')
     if (results.winner != 'draw') {
-       return console.log(`${results.winner} won the round, ${results.winnerPick} beats ${results.loosePick}`);       
+       return p1.innerText = (`${results.winner} won the round, ${results.winnerPick} beats ${results.loosePick}`);       
         
     } else {
-
-       return console.log(`It's a draw, you both picked ${results.winnerPick}.`);
+       return p1.innerText = (`It's a draw, you both picked ${results.winnerPick}.`);
     }
 }
 
@@ -55,7 +56,7 @@ function showGameResults(rounds){
 
 function game() {
     rounds = []
-    results = playRound(playerSelection(), computerPlay())
+    results = playRound(this.innerText.toLowerCase(), computerPlay())
     showRoundResult(results)
     rounds.push(results.winner)
     return results
@@ -65,8 +66,9 @@ function game() {
 
 // Dom 
 
-const buttons = document.querySelector('button')
+function gameControll(){
+    const buttons = document.querySelectorAll('button')
+    buttons.forEach(e => e.addEventListener('click', game));
+}
 
-// buttons.forEach(e => e.addEventListener);
-
-game()
+gameControll()
