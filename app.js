@@ -1,3 +1,9 @@
+const rules = {
+    rock: "paper",
+    scissor: "rock",
+    paper: "scissor"
+}
+
 function computerPlay() {
     const picks = ['rock', 'paper', 'scissor']
     return picks[Math.floor(Math.random() * 3)]
@@ -7,27 +13,23 @@ const playerSelection = () => prompt("Pick an option [Rock, Paper, Scissor]").to
 
 function playRound(playerSelection, computerSelection) {
     if (playerSelection === computerSelection) {
-        return results = {
+        return {
             winner: 'draw',
             winnerPick: playerSelection,
             loosePick: computerSelection
         }
-    } else 
-        switch (true) {
-            case playerSelection === 'rock' && computerSelection === 'paper':
-            case playerSelection === 'paper' && computerSelection === 'scissor':
-            case playerSelection ==='scissor' && computerSelection === 'rock':
-                return results = {
-                    winner: 'The computer',
-                    winnerPick: computerSelection,
-                    loosePick: playerSelection
-                }; 
-            default:
-                return results = {
-                    winner: 'You',
-                    winnerPick: playerSelection,
-                    loosePick: computerSelection
-                }; 
+    } else if(rules[computerSelection] === playerSelection){
+        return {
+            winner: "The player",
+            winnerPick: playerSelection,
+            loosePick: computerSelection
+        } 
+    } else {
+        return {
+            winner: "The computer",
+            winnerPick: computerSelection,
+            loosePick: playerSelection
+        }
     }
 }
 
@@ -37,7 +39,7 @@ function showRoundResult(results) {
         
     } else {
 
-       return console.log(`It's a draw, you both picked ${results.winnerPick}, ${results.loosePick}`);
+       return console.log(`It's a draw, you both picked ${results.winnerPick}.`);
     }
 }
 
@@ -53,12 +55,18 @@ function showGameResults(rounds){
 
 function game() {
     rounds = []
-    for (let i = 0; i < 5; i++){
-        results = playRound(playerSelection(), computerPlay())
-        showRoundResult(results)
-        rounds.push(results.winner)
-    }
-    return showGameResults(rounds)
+    results = playRound(playerSelection(), computerPlay())
+    showRoundResult(results)
+    rounds.push(results.winner)
+    return results
+    // return showGameResults(rounds)
 }
+
+
+// Dom 
+
+const buttons = document.querySelector('button')
+
+// buttons.forEach(e => e.addEventListener);
 
 game()
