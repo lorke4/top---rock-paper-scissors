@@ -44,7 +44,7 @@ function showRoundResult(results) {
     }
 }
 
-function showGameResults(rounds){
+function announceGameResults(rounds) {
     if (rounds.filter(word => word === 'The computer').length == rounds.filter(word => word === 'You').length) {
         console.log(`The game ended in a draw, you both have ${rounds.filter(word => word === 'The computer').length} points.`)
     } else if (rounds.filter(word => word === 'The computer').length > rounds.filter(word => word === 'You').length) {
@@ -54,12 +54,30 @@ function showGameResults(rounds){
     }
 }
 
+function displayScore(results) {
+    const playerScores = document.querySelector('.score-left');
+    let playerWins = parseInt(playerScores.innerText);
+    playerWins += results.filter(word => word === 'The player').length;
+    if(playerWins) {
+        playerScores.innerText = playerWins.toString();
+    }
+
+
+    const computerScores = document.querySelector('.score-right')
+    let computerWins = parseInt(computerScores.innerText);
+    computerWins += results.filter(word => word === 'The computer').length
+    if(computerWins) {
+        computerScores.innerText = computerWins.toString();
+    }
+}
+
 function game() {
     rounds = []
     results = playRound(this.innerText.toLowerCase(), computerPlay())
     showRoundResult(results)
     rounds.push(results.winner)
-    return results
+    displayScore(rounds)
+    return rounds
     // return showGameResults(rounds)
 }
 
